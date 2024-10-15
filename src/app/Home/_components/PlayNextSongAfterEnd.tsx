@@ -28,6 +28,8 @@ const PlayNextSongAfterEnd = ({songs}:PlayNextSongAfterEndProps) => {
         setMusics(songs)
     },[])
 
+    console.log('')
+
     return (
     <div>
 
