@@ -31,7 +31,7 @@ const SongItem = ({ song }: SongItemProps) => {
             className="w-full h-full absolute bg-black bg-opacity-50 flex justify-center items-center"
             onClick={(e) => {
               e.stopPropagation();
-              !playState ? playMusic() : pauseMusic();
+              if(!playState){  playMusic()}else{ pauseMusic();}
             }}
           >
             {!playState ? <FaPlay size={55} /> : <FaPause size={55} />}

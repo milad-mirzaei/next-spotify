@@ -13,8 +13,7 @@ const AddAlbumPage = () => {
     handleSubmit,
     setValue,
     watch,
-    reset,
-    formState: { errors },
+    reset
   } = useForm<{
     name: string;
     desc: string;
@@ -41,7 +40,7 @@ const AddAlbumPage = () => {
           bgColor:fData.bgColor,
           artistId:fData.artistId
         });
-        res?.success && reset()
+        if(res?.success) reset()
       }
     }
   });

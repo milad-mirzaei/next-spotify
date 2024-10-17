@@ -1,7 +1,6 @@
 import React from 'react'
 import Navbar from './_components/Navbar'
 import SongsList from './_components/SongsList'
-import AddSongSection from '../Dashboard/_components/AddSongSection'
 
 const HomePage = () => {
   return (

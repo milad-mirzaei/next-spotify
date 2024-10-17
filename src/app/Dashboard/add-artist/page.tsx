@@ -12,9 +12,8 @@ const AddArtistPage = () => {
     handleSubmit,
     setValue,
     watch,
-    reset,
-    formState: { errors },
-  } = useForm<{ fullName: string; artistImage: File | null }>();
+    reset
+    } = useForm<{ fullName: string; artistImage: File | null }>();
 
   const {artistImage} = watch()
 
@@ -29,7 +28,7 @@ const AddArtistPage = () => {
           fullName: fData.fullName,
           artistImage: result.filePath,
         });
-        res?.success && reset()
+        if(res?.success) reset()
       }
     }
   });

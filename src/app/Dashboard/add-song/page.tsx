@@ -13,8 +13,7 @@ const AddSongPage = () => {
     handleSubmit,
     setValue,
     watch,
-    reset,
-    formState: { errors },
+    reset
   } = useForm<{
     name: string;
     desc: string;
@@ -64,7 +63,7 @@ const AddSongPage = () => {
           file: fileResult.filePath,
           duration: duration ?? 0,
         });
-        res?.success && reset();
+        if(res?.success)  reset();
       }
     }
   });

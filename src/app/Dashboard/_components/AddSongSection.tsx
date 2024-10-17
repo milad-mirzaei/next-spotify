@@ -1,18 +1,9 @@
 'use client'
-import { AddSong } from '@/actions/AddSong'
-import { s3UploadAction } from '@/actions/S3BucketAction'
 import React, { ChangeEvent, useState } from 'react'
-import { useForm } from 'react-hook-form'
 
 const AddSongSection = () => {
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<{name:string,desc:string,}>();
-
-    const [file, setFile] = useState<File|null>(null)
+    const [, setFile] = useState<File|null>(null)
 
     const handleUploadSong = async()=>{
       // if(file){
