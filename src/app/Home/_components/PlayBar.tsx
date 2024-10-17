@@ -1,6 +1,7 @@
 "use client";
 
 import usePlayerStore from "@/stores/playerStore";
+import { getRandomInt } from "@/utils/randomNumebr";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
 import { FaPause, FaPlay } from "react-icons/fa";
@@ -8,7 +9,7 @@ import {
   IoPlaySkipBack,
   IoPlaySkipForward,
 } from "react-icons/io5";
-import { MdRepeat } from "react-icons/md";
+import { MdOutlineRepeatOne, MdRepeat } from "react-icons/md";
 import { PiShuffleAngularBold } from "react-icons/pi";
 
 const PlayBar = () => {
@@ -21,7 +22,11 @@ const PlayBar = () => {
     setMusicHasEnded,
     setPlayState,
     musics,
-    setMusic
+    setMusic,
+    isShuffle,
+    setIsShuffle,
+    repeatMode,
+    setRepeatMode
   } = usePlayerStore();
 
   const [currentTime, setCurrentTime] = useState<{
@@ -68,18 +73,38 @@ const PlayBar = () => {
 
   const handlePlayPreviousMusic = ()=>{
     const songIndex = musics.findIndex((song)=>song._id == music?._id )
-    if(musics[songIndex - 1]){
-      setMusic(musics[songIndex - 1])
+    const previousSongIndex = isShuffle ? getRandomInt(0,musics.length-1) : (songIndex - 1)
+    if(musics[previousSongIndex]){
+      setMusic(musics[previousSongIndex])
       setTimeout(()=>{playMusic()},100) 
   }
   }
 
   const handlePlayNextMusic = ()=>{
     const songIndex = musics.findIndex((song)=>song._id == music?._id )
-    if(musics[songIndex + 1]){
-      setMusic(musics[songIndex + 1])
+    const nextSongIndex = isShuffle ? getRandomInt(0,musics.length-1) : (songIndex + 1)
+    if(musics[nextSongIndex]){
+      setMusic(musics[nextSongIndex])
       setTimeout(()=>{playMusic()},100) 
   }
+  }
+
+  const handleToggleIsShuffle = ()=>{
+    if(isShuffle){
+      setIsShuffle(false)
+    }else{
+      setIsShuffle(true)
+    }
+  }
+
+  const handleChangeRepeatMode = ()=>{
+    if(repeatMode == 'noRepeat'){
+      setRepeatMode('repeatAll')
+    }else if(repeatMode == 'repeatAll'){
+      setRepeatMode('repeatOne')
+    }else if(repeatMode == 'repeatOne'){
+      setRepeatMode('noRepeat')
+    }
   }
 
 
@@ -100,7 +125,7 @@ const PlayBar = () => {
       </div>
       <div className="flex-[2]  h-full  flex flex-col justify-center items-center gap-2">
         <div className="w-full flex justify-center items-center gap-7">
-          <PiShuffleAngularBold size={25} className="cursor-pointer hover:text-red-600 transition-all duration-100" />
+          <PiShuffleAngularBold size={25} className={`cursor-pointer ${isShuffle && 'text-red-600'} hover:text-red-600 transition-all duration-100`} onClick={handleToggleIsShuffle} />
           <IoPlaySkipBack size={25} onClick={handlePlayPreviousMusic} className="cursor-pointer hover:text-blue-500 transition-all duration-100" />
           {!playState ? (
             <FaPlay size={25} className="cursor-pointer hover:text-green-500 transition-all duration-150" onClick={() => playMusic()} />
@@ -108,7 +133,11 @@ const PlayBar = () => {
             <FaPause size={25} className="cursor-pointer hover:text-blue-500 transition-all duration-150" onClick={() => pauseMusic()} />
           )}
           <IoPlaySkipForward size={25} onClick={handlePlayNextMusic} className="cursor-pointer hover:text-blue-500 transition-all duration-100" />
-          <MdRepeat size={25} className="cursor-pointer hover:text-red-600 transition-all duration-100" />
+          <div onClick={handleChangeRepeatMode} >
+          { repeatMode == 'noRepeat' && <MdRepeat size={25} className="cursor-pointer hover:text-red-600 transition-all duration-100" />}
+          {  repeatMode == 'repeatAll' && <MdRepeat size={25} className="cursor-pointer text-red-600 transition-all duration-100" />}
+          { repeatMode ==  'repeatOne' && <MdOutlineRepeatOne  size={25} className="cursor-pointer text-red-600 transition-all duration-100" />}
+          </div>
         </div>
         <div className="w-full flex justify-center items-center">
           <div className="w-[70%] flex justify-center items-center gap-5">
