@@ -8,6 +8,7 @@ import albumModel from "@/models/albumModel";
 import { Album } from "@/types/albumType";
 import AlbumList from "../../_components/AlbumList";
 import SongsList from "../../_components/SongsList";
+import mongooseClient from "@/libs/mongoose.lib";
 
 type PageProps = {
   params: {
@@ -17,7 +18,7 @@ type PageProps = {
 
 const ArtistPage = async ({ params }: PageProps) => {
   const artistId = params.artistId;
-
+  await mongooseClient();
   const artist: Artist = (await artistModel
     .findOne({ _id: artistId })
     .lean()) as Artist;

@@ -5,6 +5,7 @@ import { Song } from "@/types/songType";
 import Image from "next/image";
 import React from "react";
 import AlbumSongItem from "./_components/AlbumSongItem";
+import mongooseClient from "@/libs/mongoose.lib";
 
 type PageProps = {
   params: {
@@ -15,6 +16,7 @@ type PageProps = {
 
 const AlbumPage = async ({ params }: PageProps) => {
   const { albumId } = params;
+  await mongooseClient();
   const album:Album = await albumModel.findOne({_id:albumId}) as Album
   const albumSongs:Song[] = await songModel.find({ albumId }).lean() as Song[] ;
     console.log(album.bgColor)
