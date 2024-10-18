@@ -1,17 +1,14 @@
 'use client'
 
 import usePlayerStore from '@/stores/playerStore'
-import { Song } from '@/types/songType'
 import { getRandomInt } from '@/utils/randomNumebr'
 import React, { useEffect } from 'react'
 
-type PlayNextSongAfterEndProps = {
-    songs:Song[]
-}
 
-const PlayNextSongAfterEnd = ({songs}:PlayNextSongAfterEndProps) => {
+
+const PlayNextSongAfterEnd = () => {
   
-    const {musicHasEnded,music,setMusic,playMusic,setMusics,isShuffle,repeatMode} = usePlayerStore()
+    const {musicHasEnded,music,setMusic,playMusic,isShuffle,repeatMode,musics:songs} = usePlayerStore()
   
     useEffect(()=>{
         if(musicHasEnded == true){
@@ -30,11 +27,6 @@ const PlayNextSongAfterEnd = ({songs}:PlayNextSongAfterEndProps) => {
 
     },[musicHasEnded,isShuffle,repeatMode])
 
-    useEffect(()=>{
-        setMusics(songs)
-    },[])
-
-    console.log('')
 
     return (
     <div>

@@ -6,6 +6,8 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { parseBlob } from 'music-metadata';
+import { Artist } from "@/types/artistType";
+import { Album } from "@/types/albumType";
 
 const AddSongPage = () => {
   const {
@@ -27,7 +29,7 @@ const AddSongPage = () => {
     albumId: string;
   }>();
 
-  const { image, artistId, file } = watch();
+  const { image, artistId, file,albumId } = watch();
 
   const onSubmit = handleSubmit(async (fData) => {
     console.log(fData);
@@ -69,13 +71,10 @@ const AddSongPage = () => {
   });
 
   const [artistIsOpen, setArtistIsOpen] = useState(false);
+  const [albumIsOpen, setAlbumIsOpen] = useState(false);
 
   const [artists, setArtists] = useState<
-    {
-      _id: string;
-      fullName: string;
-      image: string;
-    }[]
+    Artist[]
   >([]);
 
   useEffect(() => {
@@ -83,6 +82,16 @@ const AddSongPage = () => {
       .then((response) => response.json())
       .then((data) => setArtists(data.artists));
   }, []);
+
+  const [artistAlbums, setArtistAlbums] = useState<Album[]>([])
+
+  useEffect(()=>{
+    if(artistId){
+      fetch(`/api/artists/${artistId}/albums`)
+      .then((response)=>response.json())
+      .then((data)=> setArtistAlbums(data.albums))
+    } 
+  },[artistId])
 
   return (
     <div className="w-full h-full flex flex-col justify-start items-start gap-5 p-5">
@@ -165,18 +174,38 @@ const AddSongPage = () => {
             ? artists.find((artist) => artist._id == artistId)?.fullName ?? ""
             : "artist"}
           {artistIsOpen && (
-            <div className="w-full max-h-[300px] p-2 flex flex-col justify-start items-center absolute top-[55px] bg-black  border-[1px] border-white rounded-xl right-0">
+            <div className="w-full max-h-[300px] p-2 flex flex-col justify-start items-center absolute top-[55px] bg-black z-10  border-[1px] border-white rounded-xl right-0 gap-1 overflow-y-auto">
               {artists.map((artist, index) => (
                 <div
                   key={index}
-                  className="w-full h-[40px] flex justify-start items-center hover:bg-white hover:bg-opacity-10"
+                  className="w-full min-h-[50px] flex justify-start items-center hover:bg-white hover:bg-opacity-10 gap-2"
                   onClick={() => {
                     setValue("artistId", artist._id);
                   }}
                 >
+                  <div className="w-[50px] aspect-square relative" >
+                  <Image src={artist.image} alt="albumCover" fill  />
+                </div>
                   {artist.fullName}
                 </div>
               ))}
+            </div>
+          )}
+        </div>
+
+        <div
+          className="w-[57%] h-[50px] bg-transparent border-[1px] border-white rounded-xl p-2 px-4 cursor-pointer relative"
+          onClick={() => setAlbumIsOpen((prev) => !prev)}
+        >
+          {albumId ? artistAlbums.find((album)=>album._id == albumId)?.name ?? '' : "album"}
+          {albumIsOpen && (
+            <div className="w-full max-h-[300px] p-2 flex flex-col justify-start items-center absolute top-[55px] bg-black  border-[1px] border-white rounded-xl right-0 gap-1 overflow-y-auto">
+              {artistAlbums.map((album,index)=> <div key={index} className="w-full min-h-[50px] flex justify-start items-center hover:bg-white hover:bg-opacity-10 gap-2" onClick={()=>{setValue('albumId',album._id)}} >
+                <div className="w-[50px] aspect-square relative" >
+                  <Image src={album.image} alt="albumCover" fill  />
+                </div>
+                {album.name}
+                </div> )}
             </div>
           )}
         </div>

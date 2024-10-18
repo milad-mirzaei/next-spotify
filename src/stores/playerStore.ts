@@ -9,6 +9,8 @@ export type PlayerStore = {
     musicHasEnded:boolean
     repeatMode:'repeatAll' | 'repeatOne' | 'noRepeat'
     isShuffle:boolean
+    volume:number
+    setVolume:(volume:number)=>void
     setMusics:(musics:Song[])=>void
     setMusic:(music:Song)=>void
     setMusicRef:(ref:React.RefObject<HTMLAudioElement>)=>void
@@ -28,6 +30,12 @@ const usePlayerStore = create<PlayerStore>((set)=>({
     musicHasEnded:false,
     repeatMode:'noRepeat',
     isShuffle:false,
+    volume:1,
+    setVolume:(volume)=>{
+        set(()=>({
+            volume
+        }))
+    },
     setMusics:(musics)=>{
         set(()=>({
             musics

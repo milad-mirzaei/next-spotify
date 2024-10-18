@@ -2,6 +2,8 @@
 
 import { AddAlbum } from "@/actions/AddAlbum";
 import { s3UploadAction } from "@/actions/S3BucketAction";
+import { Album } from "@/types/albumType";
+import { Artist } from "@/types/artistType";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { HexColorPicker } from "react-colorful";
@@ -20,9 +22,10 @@ const AddAlbumPage = () => {
     bgColor: string;
     image: File | null;
     artistId: string;
+    albumId: string;
   }>();
 
-  const { image, bgColor, artistId } = watch();
+  const { image, bgColor, artistId,albumId } = watch();
 
   const [artistIsOpen, setArtistIsOpen] = useState(false);
 
@@ -45,17 +48,16 @@ const AddAlbumPage = () => {
     }
   });
 
-  const [artists, setArtists] = useState<{
-    _id:string,
-    fullName:string,
-    image:string,
-}[]>([]);
+  const [artists, setArtists] = useState<Artist[]>([]);
+
 
   useEffect(() => {
     fetch("/api/artists")
       .then((response) => response.json())
-      .then((data) => setArtists(data.artists));
+      .then((data) => setArtists(data.artists)); 
   }, []);
+
+ 
 
   return (
     <div className="w-full h-full flex flex-col justify-start items-start gap-5 p-5">
@@ -125,6 +127,8 @@ const AddAlbumPage = () => {
             </div>
           )}
         </div>
+
+       
 
         <input
           type="submit"

@@ -45,7 +45,7 @@ const PlayBar = () => {
       setMusicRef(audioRef);
       setTimeout(() => {
         current.ontimeupdate = () => {
-          if(progressCurrent) progressCurrent.style.width = `${Math.floor(current.currentTime / current.duration * 100 )}%`
+          if(progressCurrent) progressCurrent.style.width = `${current.currentTime / current.duration * 100 }%`
           setCurrentTime({
             minutes: Math.floor(
               current?.currentTime ? current?.currentTime / 60 : 0
@@ -111,7 +111,7 @@ const PlayBar = () => {
   return (
     <div
       className={`w-full ${
-        music ? "h-[10vh]  flex" : "h-0 hidden"
+        music ? "min-h-[10vh]  flex" : "h-0 hidden"
       }  justify-between items-center px-5`}
     >
       <div className="flex flex-[1] justify-start items-center gap-2 h-full ">
@@ -154,7 +154,9 @@ const PlayBar = () => {
             ref={progressBgRef}
             onClick={handleSeekMusic}
             >
-              <div className="h-full bg-green-500 w-0" ref={progressBarRef} ></div>
+              <div className="h-full bg-green-500 w-0 transition-all absolute" ref={progressBarRef} >
+                <div className="w-[17px] aspect-square rounded-full bg-green-500  absolute right-[-7px] top-[-7px] " ></div>
+              </div>
             </div>
             <p>
               {musicMinutes < 10 ? `0${musicMinutes}` : musicMinutes}:

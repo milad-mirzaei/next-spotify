@@ -8,17 +8,19 @@ import { FaPause, FaPlay } from "react-icons/fa";
 
 type SongItemProps = {
   song: Song;
+  songs:Song[]
 };
 
-const SongItem = ({ song }: SongItemProps) => {
-  const { setMusic, playMusic, music, playState, pauseMusic } =
+const SongItem = ({ song , songs }: SongItemProps) => {
+  const { setMusic, playMusic, music, playState, pauseMusic , setMusics } =
     usePlayerStore();
 
   return (
     <div
-      className="min-w-[250px] w-[250px] bg-white bg-opacity-10 hover:bg-opacity-5 transition-all duration-100 p-4 h-[300px] flex flex-col justify-start items-center cursor-pointer"
+      className="min-w-[250px] w-[250px] bg-white bg-opacity-10 hover:bg-opacity-5 transition-all duration-100 p-4 min-h-[300px] flex flex-col justify-start items-center cursor-pointer"
       onClick={() => {
         setMusic(song);
+        setMusics(songs)
         setTimeout(() => {
           playMusic();
         }, 100);

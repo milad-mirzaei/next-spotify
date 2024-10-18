@@ -1,16 +1,19 @@
+import Link from "next/link";
 import React from "react";
 import { FiArrowRight, FiHome, FiPlus, FiSearch } from "react-icons/fi";
 import { VscLibrary } from "react-icons/vsc";
 
 const SideBar = () => {
-  const sideMenuItems: { title: string; icon: React.ReactElement }[] = [
+  const sideMenuItems: { title: string; icon: React.ReactElement,href:string }[] = [
     {
       title: "Home",
       icon: <FiHome size={30} />,
+      href:'/Home'
     },
     {
       title: "Search",
       icon: <FiSearch size={30} />,
+      href:'/Dashboard'
     },
   ];
 
@@ -18,13 +21,14 @@ const SideBar = () => {
     <div className="w-[20%] h-full flex flex-col justify-start items-center gap-2 p-2">
       <div className="w-full flex flex-col ">
         {sideMenuItems.map((item, index) => (
+          <Link  key={index} href={item.href} >
           <div
-            key={index}
             className="w-full h-[57px] flex justify-start items-center gap-3 px-2 cursor-pointer bg-white bg-opacity-5 hover:bg-opacity-10"
           >
             {item.icon}
             <p className="text-lg">{item.title}</p>
           </div>
+          </Link>
         ))}
       </div>
       <div className="w-full h-1 flex-auto bg-white bg-opacity-5 px-2 flex flex-col justify-start items-center gap-4">
