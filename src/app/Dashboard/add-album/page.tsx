@@ -2,7 +2,6 @@
 
 import { AddAlbum } from "@/actions/AddAlbum";
 import { s3UploadAction } from "@/actions/S3BucketAction";
-import { Album } from "@/types/albumType";
 import { Artist } from "@/types/artistType";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
@@ -25,7 +24,7 @@ const AddAlbumPage = () => {
     albumId: string;
   }>();
 
-  const { image, bgColor, artistId,albumId } = watch();
+  const { image, bgColor, artistId } = watch();
 
   const [artistIsOpen, setArtistIsOpen] = useState(false);
 
