@@ -27,7 +27,7 @@ const AlbumSongItem = ({song,songs,albumSongNumber}:AlbumSongItem) => {
       }}
     >
         <div className='flex justify-start items-center gap-5 flex-1' >
-        <div className='w-[75px] aspect-square relative ' >
+        <div className='md:w-[75px] min-w-[57px] aspect-square relative ' >
             <Image src={song.image} alt='songCover' fill />
             {music?._id == song._id && <div className=' absolute w-full h-full bg-black bg-opacity-30 flex justify-center items-center'  onClick={(e) => {
               e.stopPropagation();
@@ -38,8 +38,8 @@ const AlbumSongItem = ({song,songs,albumSongNumber}:AlbumSongItem) => {
         </div>
         <p>{albumSongNumber + '. ' +song.name}</p>
         </div>
-        <p className='flex-1 flex justify-center items-center'>{song.desc}</p>
-        <p className='flex-1 flex justify-center items-center'>{`${Math.floor(song.duration/60) < 10 ? ('0'+Math.floor(song.duration/60)) : Math.floor(song.duration/60)}:${Math.floor(song.duration%60) < 10 ? ('0'+Math.floor(song.duration%60)) : Math.floor(song.duration%60)}`}</p>
+        <p className='flex-1 lg:flex hidden justify-center items-center'>{song.desc}</p>
+        <p className='flex-1 md:flex hidden justify-center items-center'>{`${Math.floor(song.duration/60) < 10 ? ('0'+Math.floor(song.duration/60)) : Math.floor(song.duration/60)}:${Math.floor(song.duration%60) < 10 ? ('0'+Math.floor(song.duration%60)) : Math.floor(song.duration%60)}`}</p>
         <div className='flex justify-end items-center gap-2 flex-1' >
             <div className='rounded-full hover:bg-black hover:bg-opacity-10 p-3' >
             <FaRegHeart size={20} />

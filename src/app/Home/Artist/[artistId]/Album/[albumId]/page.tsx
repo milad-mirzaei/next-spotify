@@ -21,11 +21,11 @@ const AlbumPage = async ({ params }: PageProps) => {
   const albumSongs:Song[] = await songModel.find({ albumId }).lean() as Song[] ;
     console.log(album.bgColor)
   return (
-    <div className={`w-full h-1 flex-auto overflow-y-auto flex flex-col justify-start bg-gradient-to-t from-black from-40% via-[#000000c0]  via-60% to-transparent  `}
+    <div className={`w-full h-1 flex-auto overflow-y-auto flex flex-col justify-start bg-gradient-to-t from-black from-40% via-[#000000c0]  via-60% to-transparent  text-white `}
     style={{backgroundColor:album.bgColor}}
     >
       <div className="w-full flex justify-start items-center p-5 gap-7" >
-        <div className="min-w-[250px] aspect-square relative" >
+        <div className="md:min-w-[250px] min-w-[170px] aspect-square relative" >
             <Image src={album.image} alt="albumCover" fill />
         </div>
         <div className=" w-full flex-auto flex flex-col justify-center items-start gap-2" >

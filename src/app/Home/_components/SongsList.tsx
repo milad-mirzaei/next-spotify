@@ -8,7 +8,7 @@ type SongsListProps = {
 
 const SongsList = async ({songs}:SongsListProps) => {
   return (
-    <div className="w-full min-h-[300px] flex justify-start items-center gap-2 p-2 overflow-x-auto">
+    <div className="w-full min-h-[320px] flex justify-start items-center gap-2 p-2 overflow-x-auto">
       {songs.map((song, index) => (
         <SongItem key={index} song={song} songs={songs} />
       ))}

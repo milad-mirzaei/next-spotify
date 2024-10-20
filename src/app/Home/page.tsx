@@ -17,7 +17,7 @@ const HomePage = async() => {
   const artists:Artist[] = await artistModel.find().lean() as Artist[];
   const albums:Album[] = await albumModel.find().lean() as Album[]
   return (
-    <div className="w-full h-full flex-auto overflow-y-auto p-2 flex flex-col justify-start gap-3 ">
+    <div className="w-full h-full flex-auto overflow-y-auto p-2 flex flex-col justify-start gap-3 text-white ">
         <Categories/>
       <div className="w-full bg-white bg-opacity-5 flex flex-col justify-start items-center p-2">
         <p className='w-full text-left pt-4 p-2 text-4xl' >Songs</p>

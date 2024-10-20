@@ -32,7 +32,7 @@ const ArtistPage = async ({ params }: PageProps) => {
     .lean()) as Album[] ;
 
   return (
-    <div className="w-full h-1 flex-auto overflow-y-auto flex flex-col justify-start">
+    <div className="w-full h-1 flex-auto overflow-y-auto flex flex-col justify-start text-white">
       <div className="w-full flex justify-start items-center p-7 gap-5">
         <div className="min-w-[220px] aspect-square rounded-full relative overflow-hidden">
           <Image src={artist.image} alt="artist" fill />

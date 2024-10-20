@@ -15,10 +15,10 @@ const Layout = ({
   return (
     <html lang="en">
     <body>
-      <div className="w-screen h-screen flex flex-col">
+      <div className="w-screen h-screen flex flex-col ">
         <div className="w-full h-[90vh] flex-auto  flex ">
           <SideBar/>
-          <div className="w-[80%] h-full flex flex-col justify-start ">
+          <div className="lg:w-[80%] w-[100%] h-full flex flex-col justify-start bg-black text-white ">
            <Navbar/> 
             {children}
             <PlayNextSongAfterEnd />
