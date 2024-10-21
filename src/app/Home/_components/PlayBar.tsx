@@ -39,6 +39,8 @@ const PlayBar = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);
   const progressBgRef = useRef<HTMLDivElement>(null);
+  const progressBarMobileRef = useRef<HTMLDivElement>(null);
+  const progressBgMobileRef = useRef<HTMLDivElement>(null);
   const volumeRef = useRef<HTMLDivElement>(null);
   const volumeBgRef = useRef<HTMLDivElement>(null);
   const volumeMobileRef = useRef<HTMLDivElement>(null);
@@ -47,11 +49,13 @@ const PlayBar = () => {
   useEffect(() => {
     const current = audioRef.current;
     const progressCurrent = progressBarRef.current;
+    const progressMobileCurrent = progressBarMobileRef.current;
     if (current) {
       setMusicRef(audioRef);
       setTimeout(() => {
         current.ontimeupdate = () => {
           if(progressCurrent) progressCurrent.style.width = `${current.currentTime / current.duration * 100 }%`
+          if(progressMobileCurrent) progressMobileCurrent.style.width = `${current.currentTime / current.duration * 100 }%`
           setCurrentTime({
             minutes: Math.floor(
               current?.currentTime ? current?.currentTime / 60 : 0
@@ -76,8 +80,16 @@ const PlayBar = () => {
     if(current){
       current.currentTime = (e.nativeEvent.offsetX/(progressBgRef.current?.offsetWidth ?? 1)*current.duration)
     }
-
   }
+
+  const handleSeekMusicMobile = (e:React.MouseEvent<HTMLDivElement, MouseEvent>)=>{
+    const current = audioRef.current
+    if(current){
+      current.currentTime = (e.nativeEvent.offsetX/(progressBgMobileRef.current?.offsetWidth ?? 1)*current.duration)
+    }
+  }
+
+
   const handleChangeVolume = (e:React.MouseEvent<HTMLDivElement, MouseEvent>)=>{
     const current = audioRef.current;
     if(current){
@@ -149,10 +161,17 @@ const PlayBar = () => {
   return (
     <div
       className={`w-full ${
-        music ? "min-h-[10vh]  flex" : "h-0 hidden"
+        music ? "min-h-[10dvh]  flex" : "h-0 hidden"
       }  justify-between items-center px-5 bg-black text-white relative`}
     >
-      <div className="w-full md:hidden flex h-1 absolute top-0 left-0 bg-white" ></div>
+      <div className="w-full md:hidden flex h-1 absolute top-0 left-0 bg-white cursor-pointer" 
+      ref={progressBgMobileRef}
+      onClick={handleSeekMusicMobile}
+      >
+      <div className="h-full bg-green-500 w-0 transition-all absolute" ref={progressBarMobileRef} >
+                <div className="w-[17px] aspect-square rounded-full bg-green-500  absolute right-[-7px] top-[-7px] " ></div>
+              </div>
+      </div>
       <div className="flex sm:flex-[1] flex-[1] justify-start items-center gap-2 h-full ">
         <div className="md:h-[75%] h-[65%] aspect-square  relative">
           <Image src={music?.image ?? ""} alt="cover" fill objectFit="cover" />
